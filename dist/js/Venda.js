@@ -12,10 +12,10 @@ export default class Vendas {
                 return this.id.toString();
             case "cliente":
                 return this.cliente.nome;
-            case "modoPagamento":
+            case "Modo de Pagamento":
                 return this.modoPagamento;
-            case "itensVenda":
-                return this.itensVenda.map(item => `${item.produto.nome} (Quantidade: ${item.quantidade})`).join(", ");
+            case "Itens Vendidos":
+                return this.itensVenda.map(item => `${item.produto.nome} ${item.quantidade}x`).join(", ");
         }
     }
     get id() {

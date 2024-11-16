@@ -22,7 +22,13 @@
 
   "dependencies": {
 
+    "@types/datatables.net": "^1.12.3",
+
+    "@types/jquery": "^3.5.32",
+
     "concurrently": "^9.1.0",
+
+    "jquery": "^3.7.1",
 
     "lite-server": "^2.6.1"
 

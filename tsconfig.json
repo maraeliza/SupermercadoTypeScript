@@ -3,8 +3,8 @@
     "outDir": "dist/js",
     "target": "ES6",
     "noEmitOnError": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext"
+    "module": "ESNext",
+    "moduleResolution": "Node"
   },
   "include": ["src/**/*"]
 }

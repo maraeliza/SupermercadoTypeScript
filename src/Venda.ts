@@ -1,12 +1,12 @@
 import IItem from "./IItem.js";
 import Cliente from "./Cliente.js";
-import ItensVenda from "./ItensVenda.js";
+import ItemVenda from "./ItemVenda.js";
 
 export default class Vendas implements IItem {
 
   private _id: number = 0;
   private _cliente: Cliente;
-  private _itensVenda: ItensVenda[] = [];
+  private _itensVenda: ItemVenda[] = [];
   private _modoPagamento: string;
 
   constructor(id: number, cliente: Cliente, modoPagamento: string) {
@@ -19,12 +19,13 @@ export default class Vendas implements IItem {
     switch (coluna) {
       case "id":
         return this.id.toString();
+       
       case "cliente":
         return this.cliente.nome;
-      case "modoPagamento":
+      case "Modo de Pagamento":
         return this.modoPagamento;
-      case "itensVenda":
-        return this.itensVenda.map(item => `${item.produto.nome} (Quantidade: ${item.quantidade})`).join(", ");
+      case "Itens Vendidos":
+        return this.itensVenda.map(item => `${item.produto.nome} ${item.quantidade}x`).join(", ");
     }
   }
 
@@ -36,7 +37,7 @@ export default class Vendas implements IItem {
     return this._cliente;
   }
 
-  public get itensVenda(): ItensVenda[] {
+  public get itensVenda(): ItemVenda[] {
     return this._itensVenda;
   }
 
@@ -56,11 +57,12 @@ export default class Vendas implements IItem {
     this._modoPagamento = valor;
   }
 
-  public addItemVenda(item: ItensVenda): void {
+  public addItemVenda(item: ItemVenda): void {
     this._itensVenda.push(item);
   }
 
-  public set itensVenda(valor: ItensVenda[]) {
+  public set itensVenda(valor: ItemVenda[]) {
     this._itensVenda = valor;
   }
+  
 }

@@ -1,6 +1,7 @@
 export default class Form {
     constructor() {
         this.Lista = [];
+        this.Total = 0;
     }
     getItemByID(id) {
         for (var i of this.Lista) {
@@ -79,12 +80,17 @@ export default class Form {
         var linhaAdd = "<tr>";
         for (var coluna of this.getCampos()) {
             var idInput = coluna.toLocaleLowerCase().replace(/ /g, "_");
-            linhaAdd +=
-                "<th> <input class='inputTabela' id='" +
-                    idInput +
-                    "' placeholder='" +
-                    coluna +
-                    "...'></th>";
+            if (coluna == 'id') {
+                linhaAdd += "<th>" + this.Total + "</th>";
+            }
+            else {
+                linhaAdd +=
+                    "<th> <input class='inputTabela' id='" +
+                        idInput +
+                        "' placeholder='" +
+                        coluna +
+                        "...'></th>";
+            }
         }
         linhaAdd +=
             "<th class=acao> <button class='btm'><img id='addBtn' src='./imgs/add.png'></button> </th>";

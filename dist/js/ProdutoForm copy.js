@@ -4,6 +4,7 @@ export default class ProdutoForm extends Form {
     constructor() {
         super();
         this.Lista = [];
+        console.log(this.Total);
         this.Total++;
         this.Lista = [];
         this.addItensInicial();
@@ -65,21 +66,5 @@ export default class ProdutoForm extends Form {
     }
     getCampos() {
         return ["id", "nome", "preço", "quantidade"];
-    }
-    getNomes() {
-        var nomes = [];
-        for (var produto of this.Lista) {
-            nomes.push(produto.nome);
-        }
-        return nomes;
-    }
-    getProdutoByNome(nome) {
-        for (var produto of this.Lista) {
-            var nomeproduto = produto.nome.toLocaleLowerCase().replace(/ /g, "_").split(" ").join("_");
-            if (nomeproduto == nome) {
-                return produto;
-            }
-        }
-        return null;
     }
 }

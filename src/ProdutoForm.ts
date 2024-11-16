@@ -1,49 +1,53 @@
 import Form from "./Form.js";
 import Produto from "./Produto.js";
 
-export default class ProdutoForm  extends Form{
-
+export default class ProdutoForm extends Form {
   Lista: Produto[] = [];
+  
 
   constructor() {
     super();
-    this.Lista = [] ;
-    this.Lista.push(new Produto(1, "Arroz Vasconcelos", 30.99, 90));
-    this.Lista.push(new Produto(2, "Feijão Carioca", 25.49, 120));
-    this.Lista.push(new Produto(3, "Açúcar União", 15.99, 200));
-    this.Lista.push(new Produto(4, "Macarrão Adria", 8.49, 150));
-    this.Lista.push(new Produto(5, "Óleo Liza", 10.99, 80));
+    this.Total++;
+    this.Lista = [];
+    this.addItensInicial();
+  }
+  addItemLista(produto:Produto){
+    this.Total++;
+    this.Lista.push(produto);
+  }
+
+  addItensInicial(){
+    this.addItemLista(new Produto(this.Total, "Feijão Carioca", 25.49, 120));
+    this.addItemLista(new Produto(this.Total, "Açúcar União", 15.99, 200));
+    this.addItemLista(new Produto(this.Total, "Macarrão Adria", 8.49, 150));
+    this.addItemLista(new Produto(this.Total, "Óleo Liza", 10.99, 80));
   }
 
   create(): boolean {
-    console.log("aa");
-    var idElemento = <HTMLInputElement>document.getElementById("id");
     var nomeElemento = <HTMLInputElement>document.getElementById("nome");
     var precoElemento = <HTMLInputElement>document.getElementById("preço");
     var quantidadeElemento = <HTMLInputElement>(
       document.getElementById("quantidade")
     );
 
-    var id = parseInt(idElemento.value);
-    if (typeof id == "number" && id != 0) {
-      var nome = nomeElemento.value;
-      if (nome.length > 0) {
-        var preco = parseFloat(precoElemento.value);
-        if (typeof preco == "number" && preco > 0) {
-          var quantidade = parseInt(quantidadeElemento.value);
-          if (typeof quantidade == "number" && quantidade > 0) {
-            var newP = new Produto(id, nome, preco, quantidade);
-            this.Lista.push(newP);
-            return true;
-          }
+    var nome = nomeElemento.value;
+    if (nome.length > 0) {
+      var preco = parseFloat(precoElemento.value);
+      if (typeof preco == "number" && preco > 0) {
+        var quantidade = parseInt(quantidadeElemento.value);
+        if (typeof quantidade == "number" && quantidade > 0) {
+          var newP = new Produto(this.Total, nome, preco, quantidade);
+          this.addItemLista(newP);
+          return true;
         }
       }
     }
+
     return false;
   }
   update(id: number): boolean {
     var alterado = false;
-  
+
     var nomeElemento = <HTMLInputElement>document.getElementById("nome");
     var precoElemento = <HTMLInputElement>document.getElementById("preço");
     var quantidadeElemento = <HTMLInputElement>(
@@ -51,7 +55,7 @@ export default class ProdutoForm  extends Form{
     );
 
     if (typeof id == "number" && id != 0) {
-      var produto = <Produto> this.getItemByID(id);
+      var produto = <Produto>this.getItemByID(id);
       var nome = nomeElemento.value;
 
       if (nome.length > 0 && produto.nome != nome) {
@@ -65,7 +69,11 @@ export default class ProdutoForm  extends Form{
         alterado = true;
       }
       var quantidade = parseInt(quantidadeElemento.value);
-      if (typeof quantidade == "number" && quantidade > 0 && produto.quantidade != quantidade) {
+      if (
+        typeof quantidade == "number" &&
+        quantidade > 0 &&
+        produto.quantidade != quantidade
+      ) {
         produto.quantidade = quantidade;
         alterado = true;
       }
@@ -76,6 +84,21 @@ export default class ProdutoForm  extends Form{
   getCampos(): Array<string> {
     return ["id", "nome", "preço", "quantidade"];
   }
-
-
+  getNomes(): Array<string> {
+    var nomes:string[] = [];
+    for(var produto of this.Lista){
+      nomes.push(produto.nome);
+    }
+    return nomes;
+  }
+  getProdutoByNome(nome:string):Produto{
+ 
+    for(var produto of this.Lista){
+      var nomeproduto = produto.nome.toLocaleLowerCase().replace(/ /g, "_").split(" ").join("_");
+      if(nomeproduto == nome){
+        return produto;
+      }
+    }
+    return null;
+  }
 }
