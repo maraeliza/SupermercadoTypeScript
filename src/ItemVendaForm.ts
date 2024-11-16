@@ -79,7 +79,6 @@ export default class ItemVendaForm extends Form {
   }
 
   create(): boolean {
-
     var id = this.Total;
     var produtoElemento = <HTMLSelectElement>document.getElementById("produto");
     var produtoObj: Produto = this.formProduto.getProdutoByNome(
@@ -122,7 +121,7 @@ export default class ItemVendaForm extends Form {
       itemVenda.venda.itensVenda.splice(
         itemVenda.venda.itensVenda.indexOf(itemVenda),
         1
-      )
+      );
       itemVenda.venda = venda;
       itemVenda.venda.itensVenda.push(itemVenda);
       alterado = true;
@@ -143,7 +142,6 @@ export default class ItemVendaForm extends Form {
       itemVenda.quantidade = quantidade;
       alterado = true;
     }
- 
 
     return alterado;
   }
@@ -193,7 +191,6 @@ export default class ItemVendaForm extends Form {
   }
 
   montarTabelaUpdate(id: number) {
-
     var tabela = "";
     for (var item of this.Lista) {
       tabela += "<tr>";
@@ -207,12 +204,17 @@ export default class ItemVendaForm extends Form {
             //montar select com todos os clientes
             tabela += "<th> <select class='inputTabela' id='" + idInput + "'>";
             for (var idVenda of this.formVenda.getIDS()) {
-              if(Number(idVenda) == item.venda.id){
-                tabela += "<option selected value=" + idVenda + ">" + idVenda + "</option>";
-              }else{
-                tabela += "<option value=" + idVenda + ">" + idVenda + "</option>";
+              if (Number(idVenda) == item.venda.id) {
+                tabela +=
+                  "<option selected value=" +
+                  idVenda +
+                  ">" +
+                  idVenda +
+                  "</option>";
+              } else {
+                tabela +=
+                  "<option value=" + idVenda + ">" + idVenda + "</option>";
               }
-              
             }
             tabela += "</select></th>";
           } else if (coluna == "produto") {
@@ -224,11 +226,17 @@ export default class ItemVendaForm extends Form {
                 .replace(/ /g, "_")
                 .split(" ")
                 .join("_");
-                if(item.produto.nome == nome){
-                tabela += "<option selected value=" + valorInput + ">" + nome + "</option>";
-                }else{
-                  tabela += "<option value=" + valorInput + ">" + nome + "</option>";
-                }
+              if (item.produto.nome == nome) {
+                tabela +=
+                  "<option selected value=" +
+                  valorInput +
+                  ">" +
+                  nome +
+                  "</option>";
+              } else {
+                tabela +=
+                  "<option value=" + valorInput + ">" + nome + "</option>";
+              }
             }
             tabela += "</select></th>";
           } else if (coluna == "quantidade") {
@@ -250,5 +258,24 @@ export default class ItemVendaForm extends Form {
       tabela += "</tr>";
     }
     return tabela;
+  }
+
+  delete(id: number): boolean {
+    //achar elemento pelo id
+    for (var item of this.Lista) {
+      if (item.id == id) {
+        //percorrendo as vendas para excluir o item
+        for (var venda of this.formVenda.Lista) {
+          if (venda.id == item.venda.id) {
+            venda.itensVenda.splice(venda.itensVenda.indexOf(item), 1);
+          }
+        }
+        this.Lista.splice(this.Lista.indexOf(item), 1);
+
+        return true;
+      }
+    }
+    //remover da lista
+    return false;
   }
 }

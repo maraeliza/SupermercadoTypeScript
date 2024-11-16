@@ -15,12 +15,12 @@ const tabelaDescricao = document.getElementById("tabelaDescricao");
 const tabelaNomeIV = document.getElementById("tabelaNomeIV");
 const tabelaDescricaoIV = document.getElementById("tabelaDescricaoIV");
 var form;
-tabelaNome.innerHTML = "Vendas cadastradas";
+tabelaNome.innerHTML = "Produtos cadastrados";
 var formProduto = new ProdutoForm();
 var formCliente = new ClienteForm();
 var formVendas = new VendasForm(formProduto, formCliente);
 var formIV = new ItemVendaForm(formProduto, formVendas);
-form = formVendas;
+form = formProduto;
 atualizarTabela(form);
 document.getElementById("opProduto").addEventListener("click", function () {
     form = formProduto;
@@ -156,8 +156,7 @@ function attPrimeiraTabela(dados) {
     tabelaDescricao.innerHTML =
         "Total: " +
             form.Lista.length +
-            " itens registrados no sistema <br>Última atualização: " +
-            montarData();
+            " itens registrados no sistema <br>";
 }
 function atualizarTabelaIV(form) {
     var dados = form.montarTabela();
@@ -169,8 +168,7 @@ function atualizarTabelaIV(form) {
     tabelaDescricaoIV.innerHTML =
         "Total: " +
             form.Lista.length +
-            " itens registrados no sistema <br>Última atualização: " +
-            montarData();
+            " itens registrados no sistema <br>";
 }
 function montarData() {
     var dataFormatada = new Date().toLocaleString("pt-BR", {

@@ -132,10 +132,16 @@ export default class ItemVendaForm extends Form {
                         tabela += "<th> <select class='inputTabela' id='" + idInput + "'>";
                         for (var idVenda of this.formVenda.getIDS()) {
                             if (Number(idVenda) == item.venda.id) {
-                                tabela += "<option selected value=" + idVenda + ">" + idVenda + "</option>";
+                                tabela +=
+                                    "<option selected value=" +
+                                        idVenda +
+                                        ">" +
+                                        idVenda +
+                                        "</option>";
                             }
                             else {
-                                tabela += "<option value=" + idVenda + ">" + idVenda + "</option>";
+                                tabela +=
+                                    "<option value=" + idVenda + ">" + idVenda + "</option>";
                             }
                         }
                         tabela += "</select></th>";
@@ -150,10 +156,16 @@ export default class ItemVendaForm extends Form {
                                 .split(" ")
                                 .join("_");
                             if (item.produto.nome == nome) {
-                                tabela += "<option selected value=" + valorInput + ">" + nome + "</option>";
+                                tabela +=
+                                    "<option selected value=" +
+                                        valorInput +
+                                        ">" +
+                                        nome +
+                                        "</option>";
                             }
                             else {
-                                tabela += "<option value=" + valorInput + ">" + nome + "</option>";
+                                tabela +=
+                                    "<option value=" + valorInput + ">" + nome + "</option>";
                             }
                         }
                         tabela += "</select></th>";
@@ -178,5 +190,22 @@ export default class ItemVendaForm extends Form {
             tabela += "</tr>";
         }
         return tabela;
+    }
+    delete(id) {
+        //achar elemento pelo id
+        for (var item of this.Lista) {
+            if (item.id == id) {
+                //percorrendo as vendas para excluir o item
+                for (var venda of this.formVenda.Lista) {
+                    if (venda.id == item.venda.id) {
+                        venda.itensVenda.splice(venda.itensVenda.indexOf(item), 1);
+                    }
+                }
+                this.Lista.splice(this.Lista.indexOf(item), 1);
+                return true;
+            }
+        }
+        //remover da lista
+        return false;
     }
 }
